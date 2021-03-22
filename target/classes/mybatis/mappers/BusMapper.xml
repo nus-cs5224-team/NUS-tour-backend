@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nus.campus.mappers.BusMapper">
+    <select id="findById" resultType="edu.nus.campus.model.Bus">
+        SELECT * FROM `bus`
+        WHERE `id`=#{id};
+    </select>
+
+    <select id="findByName" resultType="edu.nus.campus.model.Bus">
+        SELECT * FROM `bus`
+        WHERE `name`=#{name};
+    </select>
+
+    <select id="findRouteByBus" parameterType="edu.nus.campus.model.Bus" resultType="edu.nus.campus.model.Stop">
+        SELECT `stop`.*
+        FROM `stop` RIGHT JOIN (SELECT `stop_id`, `index` FROM `running_through`
+                                INNER JOIN `bus` ON `bus`.`id`=`running_through`.`bus_id`
+                                WHERE `bus`.`name`=#{name}) `bus_route`
+            ON `stop`.`id`=`bus_route`.`stop_id`
+        ORDER BY `index` ASC;
+    </select>
+
+    <select id="findTimetableByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.sql.Time">
+        SELECT `starttime` FROM `bus_timetable`
+        WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus_id`=#{id}
+        ORDER BY `starttime` ASC;
+    </select>
+</mapper>

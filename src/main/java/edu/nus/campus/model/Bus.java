@@ -5,8 +5,6 @@ import java.util.List;
 public class Bus {
     private int id;
     private String name;
-    private List<String> route;
-
 
     // Default getters and setters;
     public int getId() {
@@ -23,13 +21,5 @@ public class Bus {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<String> getRoute() {
-        return route;
-    }
-
-    public void setRoute(List<String> route) {
-        this.route = route;
     }
 }

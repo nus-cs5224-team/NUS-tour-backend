@@ -1,13 +1,14 @@
 package edu.nus.campus.controller;
 
+import edu.nus.campus.mappers.BusMapper;
 import edu.nus.campus.model.Bus;
 import edu.nus.campus.model.Stop;
-import edu.nus.campus.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -18,12 +19,15 @@ import java.util.List;
 @RequestMapping("/bus")
 @Api(tags = "Bus API")
 public class BusController {
+    @Autowired
+    private BusMapper busMapper;
+
     @ApiOperation("Get a bus")
     @GetMapping("/{busName}")
     public Bus getBus(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
         if (busName == null) return null;
-        return new Bus();
+        return busMapper.findByName(busName);
     }
 
     @ApiOperation("Get a bus's route")
@@ -31,20 +35,16 @@ public class BusController {
     public List<Stop> getRoute(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
         if (busName == null) return null;
-        return new ArrayList<Stop>() {{
-            add(new Stop());
-            add(new Stop());
-        }};
+        Bus bus = busMapper.findByName(busName);
+        return busMapper.findRouteByBus(bus);
     }
 
     @ApiOperation("Get a bus's timetable")
     @GetMapping("/{busName}/timetable")
-    public List<String> getTimetable(@PathVariable("busName") String busName) {
+    public List<Time> getTimetable(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
         if (busName == null) return null;
-        return new ArrayList<String>() {{
-            add("11:20");
-            add("12:30");
-        }};
+        Bus bus = busMapper.findByName(busName);
+        return busMapper.findTimetableByBus(bus);
     }
 }

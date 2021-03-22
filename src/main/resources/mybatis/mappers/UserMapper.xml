@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nus.campus.mappers.UserMapper">
+    <select id="findById" resultType="edu.nus.campus.model.User">
+        SELECT * FROM `user`
+        WHERE `id`=#{id};
+    </select>
+
+    <insert id="insert" parameterType="edu.nus.campus.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `user` (`username`, `email`)
+        VALUES(#{username}, #{email});
+    </insert>
+
+    <update id="update" parameterType="edu.nus.campus.model.User">
+        UPDATE `user` SET username=#{username}
+        WHERE id=#{id};
+    </update>
+
+    <select id="findEventsByUser" parameterType="edu.nus.campus.model.User" resultType="edu.nus.campus.model.Event">
+        SELECT event.* FROM `user` INNER JOIN `event`
+        ON user.id=event.user_id
+        WHERE user.id=#{id};
+    </select>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nus.campus.mappers.PromotionMapper">
+    <select id="findById" resultType="edu.nus.campus.model.Promotion">
+        SELECT * FROM `promotion`
+        WHERE `id`=#{id};
+    </select>
+
+    <select id="findPromotionByBuilding" parameterType="edu.nus.campus.model.Building" resultType="edu.nus.campus.model.Promotion">
+        SELECT `promotion`.* FROM `promotion`
+        WHERE `building_id`=#{building.id}
+<!--            AND `time` BETWEEN CAST(#{starttime} AS time) AND CAST(#{endtime} AS time);-->
+        <if test=" starttime != null">
+            AND `time` &gt; #{starttime}
+        </if>
+        <if test=" endtime != null">
+            AND `time` &lt; #{endtime}
+        </if>
+        ;
+    </select>
+</mapper>

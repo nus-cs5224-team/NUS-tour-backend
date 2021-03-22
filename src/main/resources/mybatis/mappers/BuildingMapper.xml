@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nus.campus.mappers.BuildingMapper">
+    <select id="findById" resultType="edu.nus.campus.model.Building">
+        SELECT * FROM `building`
+        WHERE `id`=#{id};
+    </select>
+
+    <select id="findByName" resultType="edu.nus.campus.model.Building">
+        SELECT * FROM `building`
+        WHERE `name`=#{name};
+    </select>
+
+    <select id="findNearStop" parameterType="edu.nus.campus.model.Building" resultType="edu.nus.campus.model.Stop">
+        SELECT * FROM `stop`
+        WHERE `id` in (SELECT `stop_id` FROM `near_bus_stop`
+                       WHERE `building_id`=#{id});
+    </select>
+</mapper>

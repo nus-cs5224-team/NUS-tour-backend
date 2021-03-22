@@ -1,9 +1,11 @@
 package edu.nus.campus.controller;
 
+import edu.nus.campus.mappers.UserMapper;
 import edu.nus.campus.model.Event;
 import edu.nus.campus.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -19,6 +21,8 @@ import java.util.List;
 @RequestMapping("/user")
 @Api(tags = "User API")
 public class UserController {
+    @Autowired
+    private UserMapper userMapper;
 
     @ApiOperation("Add a user")
     @PostMapping("/")
@@ -29,7 +33,7 @@ public class UserController {
     @ApiOperation("Find user by id")
     @GetMapping("/{id}")
     public User findById(@PathVariable("id") int id) {
-        return new User();
+        return userMapper.findById(id);
     }
 
     @ApiOperation("Update user information")
