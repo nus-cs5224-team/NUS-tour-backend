@@ -1,6 +1,7 @@
 package edu.nus.campus.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Bus {
     private int id;
@@ -21,5 +22,18 @@ public class Bus {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bus bus = (Bus) o;
+        return id == bus.id && name.equals(bus.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

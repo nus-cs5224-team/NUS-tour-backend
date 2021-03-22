@@ -22,7 +22,7 @@
         ORDER BY `index` ASC;
     </select>
 
-    <select id="findTimetableByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.sql.Time">
+    <select id="findTimetableByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.time.LocalDateTime">
         SELECT `starttime` FROM `bus_timetable`
         WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus_id`=#{id}
         ORDER BY `starttime` ASC;

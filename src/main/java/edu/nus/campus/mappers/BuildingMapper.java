@@ -4,6 +4,7 @@ import edu.nus.campus.model.Building;
 import edu.nus.campus.model.Stop;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper

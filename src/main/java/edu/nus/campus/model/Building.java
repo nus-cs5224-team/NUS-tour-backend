@@ -37,4 +37,14 @@ public class Building {
     public void setPos_y(float pos_y) {
         this.pos_y = pos_y;
     }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pos_x=" + pos_x +
+                ", pos_y=" + pos_y +
+                '}';
+    }
 }

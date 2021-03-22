@@ -13,9 +13,18 @@
         WHERE `name`=#{name};
     </select>
 
+<!--    <resultMap id="nearStop" type="Map">-->
+<!--        <result property="priority" column="priority"/>-->
+<!--        <association property="stop" column="stop_id" javaType="edu.nus.campus.model.Stop"/>-->
+<!--    </resultMap>-->
+
     <select id="findNearStop" parameterType="edu.nus.campus.model.Building" resultType="edu.nus.campus.model.Stop">
-        SELECT * FROM `stop`
-        WHERE `id` in (SELECT `stop_id` FROM `near_bus_stop`
-                       WHERE `building_id`=#{id});
+        SELECT  `stop`.*, `T`.`priority` AS `priority`
+        FROM `stop`
+            RIGHT JOIN (SELECT * FROM `near_bus_stop`
+                        WHERE `building_id`=#{id}) `T`
+            ON `stop`.`id`=`T`.`stop_id`
+        ORDER BY `T`.`priority`
+        ;
     </select>
 </mapper>

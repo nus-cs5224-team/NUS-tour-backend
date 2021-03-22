@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class BusController {
 
     @ApiOperation("Get a bus's timetable")
     @GetMapping("/{busName}/timetable")
-    public List<Time> getTimetable(@PathVariable("busName") String busName) {
+    public List<LocalDateTime> getTimetable(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
         if (busName == null) return null;
         Bus bus = busMapper.findByName(busName);
