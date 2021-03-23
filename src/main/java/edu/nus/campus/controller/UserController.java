@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.websocket.server.PathParam;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,51 +39,45 @@ public class UserController {
 
     @ApiOperation("Update user information")
     @PutMapping("/")
-    public boolean update(@RequestBody User user) {
-        return true;
+    public Boolean update(@RequestBody User user) {
+        try {
+            userMapper.update(user);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 
     @ApiOperation("Delete user")
     @DeleteMapping("/{id}")
     @ApiIgnore
-    public boolean delete(@PathVariable("id") int id) {
-        return true;
+    public Boolean delete(@PathVariable("id") int id) {
+        try {
+            User user = userMapper.findById(id);
+            userMapper.delete(user);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 
     @ApiOperation("Search User's events, need be restricted by :starttime and :endtime")
     @GetMapping("/{id}/events")
     public List<Event> getUserEvents(@PathVariable("id") int id,
-                                     @RequestParam(value = "starttime", required = false) String starttime,
-                                     @RequestParam(value = "endtime", required = false) String endtime) {
-        // Fake return
-        return new ArrayList<>(){{
-            add(new Event());
-            add(new Event());
-        }};
-    }
-
-    @ApiOperation("Search a User's event by :user_id and :event_id")
-    @GetMapping("/{user_id}/event/{event_id}")
-    public Event getUserEvents(@PathVariable("user_id") int user_id,
-                               @PathVariable("event_id") int event_id) {
-        // Check if the event belongs to this user.
-        // TODO
-        // ....
-
-        // CRUD
-        // TODO
-        // ....
-
-        // Fake return
-        return new Event();
+                                     @RequestParam(value = "starttime", required = false) LocalDateTime starttime,
+                                     @RequestParam(value = "endtime", required = false) LocalDateTime endtime) {
+        User user = userMapper.findById(id);
+        return userMapper.findEventsByUser(user, starttime, endtime);
     }
 
     @ApiOperation("Add a event to a user")
     @PostMapping("/{user_id}/event")
-    public Event addEvent(@RequestBody Event event,
-                          @RequestParam("user_id") int user_id) {
-        // TODO
-
-        return new Event();
+    public Boolean addEvent(@RequestBody Event event) {
+        try {
+            userMapper.insertEvent(event);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 }

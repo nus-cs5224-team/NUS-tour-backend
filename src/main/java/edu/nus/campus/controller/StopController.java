@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/stop")
+@RequestMapping("/api/v1/stop")
 @Api(tags = "Stop API")
 public class StopController {
     @Autowired
@@ -28,7 +28,7 @@ public class StopController {
         return stopMapper.findById(id);
     }
 
-    @ApiOperation("Get running through buses")
+    @ApiOperation("Get all buses running through the stop.")
     @GetMapping("/{id}/bus")
     List<Bus> getRunningThroughBus(Stop stop) {
         return stopMapper.findRunningThroughBus(stop);

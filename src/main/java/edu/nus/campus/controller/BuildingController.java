@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/building")
+@RequestMapping("/api/v1/building")
 @Api(tags = "Building API")
 public class BuildingController {
 
@@ -26,7 +26,7 @@ public class BuildingController {
         return buildingMapper.findById(id);
     }
 
-    @ApiOperation("Find near bus stops")
+    @ApiOperation("Find near bus stops, maybe multiple bus stops with priority")
     @GetMapping("/{id}/stops")
     public List<Stop> getBuildingNearStops(@PathVariable("id") int id) {
         Building building = buildingMapper.findById(id);

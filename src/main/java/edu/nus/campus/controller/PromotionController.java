@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/promotion")
+@RequestMapping("/api/v1/promotion")
 @Api(tags = "Promotions API")
 public class PromotionController {
     private final LocalDateTime longlongago = LocalDateTime.of(1900, 1, 1, 0, 0, 0);

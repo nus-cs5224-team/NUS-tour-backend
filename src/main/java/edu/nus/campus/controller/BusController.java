@@ -17,13 +17,13 @@ import java.util.List;
  * @date 2021.03.21
  */
 @RestController
-@RequestMapping("/bus")
+@RequestMapping("/api/v1/bus")
 @Api(tags = "Bus API")
 public class BusController {
     @Autowired
     private BusMapper busMapper;
 
-    @ApiOperation("Get a bus")
+    @ApiOperation("Get a bus by name")
     @GetMapping("/{busName}")
     public Bus getBus(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
@@ -31,7 +31,7 @@ public class BusController {
         return busMapper.findByName(busName);
     }
 
-    @ApiOperation("Get a bus's route")
+    @ApiOperation("Get a bus's route by bus name")
     @GetMapping("/{busName}/route")
     public List<Stop> getRoute(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
@@ -40,7 +40,7 @@ public class BusController {
         return busMapper.findRouteByBus(bus);
     }
 
-    @ApiOperation("Get a bus's timetable")
+    @ApiOperation("Get a bus's timetable by bus name")
     @GetMapping("/{busName}/timetable")
     public List<LocalDateTime> getTimetable(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus

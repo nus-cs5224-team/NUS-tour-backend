@@ -12,12 +12,12 @@
         SELECT `promotion`.* FROM `promotion`
         WHERE `building_id`=#{building.id}
 <!--            AND `time` BETWEEN CAST(#{starttime} AS time) AND CAST(#{endtime} AS time);-->
-        <if test=" starttime != null">
-            AND `time` &gt; #{starttime}
-        </if>
-        <if test=" endtime != null">
-            AND `time` &lt; #{endtime}
-        </if>
+<!--        <if test=" starttime != null ">-->
+<!--            AND `starttime` &gt; #{starttime} -->
+<!--        </if>-->
+<!--        <if test=" endtime != null">-->
+<!--            AND `time` &lt; #{endtime}-->
+<!--        </if>-->
         ;
     </select>
 </mapper>

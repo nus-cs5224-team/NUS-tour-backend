@@ -18,9 +18,25 @@
         WHERE id=#{id};
     </update>
 
+    <delete id="delete" parameterType="edu.nus.campus.model.User">
+        DELETE FROM `user` WHERE id=#{id};
+    </delete>
+
+    <insert id="insertEvent" parameterType="edu.nus.campus.model.Event">
+        INSERT INTO `event` (abstracts, details, time, user_id)
+        VALUES (#{abstracts}, #{details}, #{time}, #{user_id});
+    </insert>
+
     <select id="findEventsByUser" parameterType="edu.nus.campus.model.User" resultType="edu.nus.campus.model.Event">
         SELECT event.* FROM `user` INNER JOIN `event`
         ON user.id=event.user_id
-        WHERE user.id=#{id};
+        WHERE user.id=#{id}
+        <if test=" starttime != null">
+            AND `time` &gt; #{starttime}
+        </if>
+        <if test=" endtime != null">
+            AND `time` &lt; #{endtime}
+        </if>
+        ;
     </select>
 </mapper>

@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2021.03.21
  */
 @RestController
-@RequestMapping("/navigation")
+@RequestMapping("/api/v1/navigation")
 @Api(tags = "Navigation API")
 public class NavigationController {
     @Autowired
@@ -46,7 +46,7 @@ public class NavigationController {
         }
     }
 
-    @ApiOperation("Get navigation information")
+    @ApiOperation("Get navigation information, need :from and :to as query parameters.")
     @GetMapping("")
     public List<Navi> navigate(@RequestParam("from") String from, @RequestParam("to") String to) {
         Building fromBuilding = buildingMapper.findByName(from);
@@ -72,10 +72,8 @@ public class NavigationController {
                 List<LocalDateTime> timetable = bus2timetableCache.get(bus);
                 for (Stop toStop: toStops) {
                     if (canReachFromTo(route, fromStop, toStop)) {
-                        avilable_navis.add(new Navi(fromStop,
-                                                    toStop,
-                                            fromStop.getPriority() + toStop.getPriority(),
-                                                    timetable));
+                        int priority = fromStop.getPriority() + toStop.getPriority();
+                        avilable_navis.add(new Navi(fromStop, toStop, priority, timetable));
                     }
                 }
             }
