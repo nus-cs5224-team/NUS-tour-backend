@@ -8,7 +8,7 @@ public class Stop {
     private float pos_x;
     private float pos_y;
 
-    private Integer priority;
+    private Integer priority = 100;
 
     @Override
     public boolean equals(Object o) {
@@ -60,8 +60,8 @@ public class Stop {
         return priority;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setPriority(Integer priority) {
+        this.priority = priority == null ? 100 : priority;
     }
 
     @Override

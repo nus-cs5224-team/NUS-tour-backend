@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2021.03.21
  */
 @RestController
-@RequestMapping("/api/v1/navigation")
+@RequestMapping("/navigation")
 @Api(tags = "Navigation API")
 public class NavigationController {
     @Autowired

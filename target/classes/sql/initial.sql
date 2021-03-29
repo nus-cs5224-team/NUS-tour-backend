@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `building` (
     `name`        VARCHAR(32)     NOT NULL      UNIQUE,
     `pos_x`       FLOAT           NOT NULL,
     `pos_y`       FLOAT           NOT NULL,
+    `story`       TEXT,
 
     PRIMARY KEY (`id`)
 );

@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2021.03.21
  */
 @RestController
-@RequestMapping("/api/v1/bus")
+@RequestMapping("/bus")
 @Api(tags = "Bus API")
 public class BusController {
     @Autowired

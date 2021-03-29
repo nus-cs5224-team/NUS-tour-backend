@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/building")
+@RequestMapping("/building")
 @Api(tags = "Building API")
 public class BuildingController {
 
