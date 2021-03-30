@@ -23,7 +23,9 @@ public class BuildingController {
     @ApiOperation("Get a building by ID")
     @GetMapping("/{id}")
     public Building getBuilding(@PathVariable("id") int id) {
-        return buildingMapper.findById(id);
+        Building building = buildingMapper.findById(id);
+        System.out.println(building);
+        return building;
     }
 
     @ApiOperation("Find near bus stops, maybe multiple bus stops with priority")

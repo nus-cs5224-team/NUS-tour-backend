@@ -1,10 +1,16 @@
 package edu.nus.campus.model;
+import edu.nus.campus.config.StaticConfig;
+import java.util.Objects;
 
 public class Building {
     private int id;
     private String name;
-    private float pos_x;
-    private float pos_y;
+    private String location;
+    private String area;
+    private String tel;
+    private String fax;
+    private String imageUrl;
+    private String locationUrl;
 
     public int getId() {
         return id;
@@ -22,20 +28,52 @@ public class Building {
         this.name = name;
     }
 
-    public float getPos_x() {
-        return pos_x;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPos_x(float pos_x) {
-        this.pos_x = pos_x;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public float getPos_y() {
-        return pos_y;
+    public String getArea() {
+        return area;
     }
 
-    public void setPos_y(float pos_y) {
-        this.pos_y = pos_y;
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getImageUrl() {
+        return StaticConfig.base_s3_url + imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getLocationUrl() {
+        return StaticConfig.base_s3_url + locationUrl;
+    }
+
+    public void setLocationUrl(String locationUrl) {
+        this.locationUrl = locationUrl;
     }
 
     @Override
@@ -43,8 +81,12 @@ public class Building {
         return "Building{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", pos_x=" + pos_x +
-                ", pos_y=" + pos_y +
+                ", location='" + location + '\'' +
+                ", area='" + area + '\'' +
+                ", tel='" + tel + '\'' +
+                ", fax='" + fax + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", locationUrl='" + locationUrl + '\'' +
                 '}';
     }
 }

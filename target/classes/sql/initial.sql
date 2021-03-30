@@ -38,13 +38,15 @@ CREATE TABLE IF NOT EXISTS `building` (
 --  name          type            constraints
     `id`          INT             NOT NULL      AUTO_INCREMENT,
     `name`        VARCHAR(32)     NOT NULL      UNIQUE,
-    `pos_x`       FLOAT           NOT NULL,
-    `pos_y`       FLOAT           NOT NULL,
-    `story`       TEXT,
-
+    `location`    VARCHAR(256)    NOT NULL      ,
+    `area`        VARCHAR(128)    NOT NULL      ,
+    `tel`         VARCHAR(32)     NOT NULL      ,
+    `fax`         VARCHAR(32)     NOT NULL      ,
+    `locationUrl` VARCHAR(128)    NOT NULL      ,
+    `imageUrl`    VARCHAR(128)    NOT NULL      ,
+    
     PRIMARY KEY (`id`)
 );
-
 
 CREATE TABLE IF NOT EXISTS `event` (
 --  name          type            constraints

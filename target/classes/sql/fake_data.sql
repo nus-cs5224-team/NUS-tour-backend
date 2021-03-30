@@ -16,10 +16,6 @@ INSERT INTO `stop` (name, pos_x, pos_y) VALUES('yih', 3.14, 3.13);
 INSERT INTO `stop` (name, pos_x, pos_y) VALUES('utown', 3.14, 3.13);
 INSERT INTO `stop` (name, pos_x, pos_y) VALUES('central library', 3.14, 3.13);
 
-INSERT INTO `building` (name, pos_x, pos_y) VALUES('yih', 3.13, 3.1);
-INSERT INTO `building` (name, pos_x, pos_y) VALUES('utown', 3.13, 3.1);
-INSERT INTO `building` (name, pos_x, pos_y) VALUES('central library', 3.13, 3.1);
-
 INSERT INTO `event` (abstracts, details, user_id) VALUES('Sleep', 'Sleep well', 1);
 
 INSERT INTO `promotion` (abstracts, details, building_id, starttime, endtime)
