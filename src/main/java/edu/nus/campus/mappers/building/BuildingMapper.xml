@@ -2,7 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="edu.nus.campus.mappers.BuildingMapper">
+<mapper namespace="edu.nus.campus.mappers.building.BuildingMapper">
+    <select id="findAllBuildings" resultType="edu.nus.campus.model.Building">
+        SELECT * FROM `building`;
+    </select>
+
     <select id="findById" resultType="edu.nus.campus.model.Building">
         SELECT * FROM `building`
         WHERE `id`=#{id};
@@ -13,7 +17,21 @@
         WHERE `name`=#{name};
     </select>
 
-    <select id="findNearStop" parameterType="edu.nus.campus.model.Building" resultType="edu.nus.campus.model.Stop">
+    <select id="searchByName" resultType="edu.nus.campus.model.Building">
+        SELECT * FROM `building`
+        WHERE `name` LIKE CONCAT('%', #{name},'%')
+        ORDER BY (
+            CASE
+            WHEN `name` LIKE #{name} THEN 1
+            WHEN `name` LIKE CONCAT(#{name},'%') THEN 2
+            WHEN `name` LIKE CONCAT('%',#{name}) THEN 3
+            WHEN `name` LIKE CONCAT('%',#{name},'%') THEN 4
+            ELSE 5
+            END
+        );
+    </select>
+
+    <select id="findNearStop" resultType="edu.nus.campus.model.Stop">
         SELECT  `stop`.*, `T`.`priority` AS `priority`
         FROM `stop`
             RIGHT JOIN (SELECT * FROM `near_bus_stop`

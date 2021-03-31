@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS `stop` (
 --  name          type            constraints
     `id`          INT             NOT NULL          AUTO_INCREMENT,
     `name`        VARCHAR(32)     NOT NULL          UNIQUE,
-    `pos_x`       FLOAT           NOT NULL,
-    `pos_y`       FLOAT           NOT NULL,
+    `pos_x`       FLOAT,
+    `pos_y`       FLOAT,
 
     PRIMARY KEY (`id`)
 );
@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS `bus_timetable` (
     `bus_id`      INT             NOT NULL,
     `weekday`     INT             NOT NULL,
     `starttime`   TIME            NOT NULL,
+    `endtime`     TIME            NOT NULL,
+    `interval`    INT             NOT NULL
 
     FOREIGN KEY (`bus_id`) REFERENCES bus(`id`),
     CONSTRAINT unique_index UNIQUE (`bus_id`, `weekday`, `starttime`)

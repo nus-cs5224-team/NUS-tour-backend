@@ -1,4 +1,4 @@
-package edu.nus.campus.mappers;
+package edu.nus.campus.mappers.user;
 
 import edu.nus.campus.model.Event;
 import edu.nus.campus.model.User;

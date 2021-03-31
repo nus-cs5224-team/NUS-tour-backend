@@ -1,18 +1,15 @@
 package edu.nus.campus.controller;
 
-import edu.nus.campus.mappers.BuildingMapper;
-import edu.nus.campus.mappers.PromotionMapper;
+import edu.nus.campus.mappers.building.BuildingMapper;
+import edu.nus.campus.mappers.promotion.PromotionMapper;
 import edu.nus.campus.model.Building;
-import edu.nus.campus.model.Bus;
 import edu.nus.campus.model.Promotion;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

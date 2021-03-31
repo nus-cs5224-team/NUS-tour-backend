@@ -1,4 +1,4 @@
-package edu.nus.campus.mappers;
+package edu.nus.campus.mappers.promotion;
 
 import edu.nus.campus.model.Building;
 import edu.nus.campus.model.Promotion;

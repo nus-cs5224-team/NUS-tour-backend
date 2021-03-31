@@ -8,8 +8,6 @@ public class Stop {
     private float pos_x;
     private float pos_y;
 
-    private Integer priority = 100;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,14 +54,6 @@ public class Stop {
         this.pos_y = pos_y;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority == null ? 100 : priority;
-    }
-
     @Override
     public String toString() {
         return "Stop{" +
@@ -71,7 +61,6 @@ public class Stop {
                 ", name='" + name + '\'' +
                 ", pos_x=" + pos_x +
                 ", pos_y=" + pos_y +
-                ", priority=" + priority +
                 '}';
     }
 }

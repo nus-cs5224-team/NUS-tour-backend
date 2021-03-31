@@ -2,10 +2,33 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="edu.nus.campus.mappers.StopMapper">
+<mapper namespace="edu.nus.campus.mappers.stop.StopMapper">
+    <select id="findAll" resultType="edu.nus.campus.model.Stop">
+        SELECT * FROM `stop`;
+    </select>
+
+    <select id="searchByName" resultType="edu.nus.campus.model.Stop">
+        SELECT * FROM `stop`
+        WHERE `name` LIKE CONCAT('%', #{name}, '%')
+        ORDER BY (
+            CASE
+            WHEN `name` LIKE #{name} THEN 1
+            WHEN `name` LIKE CONCAT(#{name},'%') THEN 2
+            WHEN `name` LIKE CONCAT('%',#{name}) THEN 3
+            WHEN `name` LIKE CONCAT('%',#{name},'%') THEN 4
+            ELSE 5
+            END
+        );
+    </select>
+
     <select id="findById" resultType="edu.nus.campus.model.Stop">
         SELECT * FROM `stop`
         WHERE `id`=#{id};
+    </select>
+
+    <select id="findByName" resultType="edu.nus.campus.model.Stop">
+        SELECT * FROM `stop`
+        WHERE `name`=#{busName};
     </select>
 
     <select id="findRunningThroughBus" parameterType="edu.nus.campus.model.Stop" resultType="edu.nus.campus.model.Bus">
@@ -15,7 +38,7 @@
                        WHERE `stop_id`=#{id});
     </select>
 
-    <select id="findRouteByBus" parameterType="edu.nus.campus.model.Bus" resultType="edu.nus.campus.model.Stop">
+    <select id="findRouteByBus" parameterType="edu.nus.campus.model.Bus" resultType="edu.nus.campus.mappers.stop.StopInNavigation">
         SELECT `stop`.*
         FROM `stop` RIGHT JOIN (SELECT `stop_id`, `index` FROM `running_through`
                                 INNER JOIN `bus` ON `bus`.`id`=`running_through`.`bus_id`

@@ -1,4 +1,4 @@
-package edu.nus.campus.mappers;
+package edu.nus.campus.mappers.bus;
 
 import edu.nus.campus.model.Bus;
 import edu.nus.campus.model.Stop;
@@ -11,6 +11,7 @@ import java.util.List;
 public interface BusMapper {
     Bus findById(int id);
     Bus findByName(String name);
+    List<Bus> findAllBus();
     List<Stop> findRouteByBus(Bus bus);
-    List<LocalDateTime> findTimetableByBus(Bus bus);
+    Integer findTimeIntervalByBus(Bus bus);
 }

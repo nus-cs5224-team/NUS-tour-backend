@@ -1,9 +1,9 @@
 package edu.nus.campus.controller;
 
-import edu.nus.campus.mappers.BuildingMapper;
-import edu.nus.campus.mappers.BusMapper;
-import edu.nus.campus.mappers.StopMapper;
-import edu.nus.campus.model.Building;
+import edu.nus.campus.mappers.building.BuildingMapper;
+import edu.nus.campus.mappers.bus.BusMapper;
+import edu.nus.campus.mappers.stop.StopMapper;
+import edu.nus.campus.mappers.stop.StopInNavigation;
 import edu.nus.campus.model.Bus;
 import edu.nus.campus.model.Stop;
 import io.swagger.annotations.Api;
@@ -11,10 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -36,50 +34,47 @@ public class NavigationController {
         public Stop from;
         public Stop to;
         public Integer priority;
-        public List<LocalDateTime> timetable;
+        public Integer interval;
 
-        public Navi(Stop from, Stop to, Integer priority, List<LocalDateTime> timetable) {
+        public Navi(Stop from, Stop to, Integer priority, Integer interval) {
             this.from = from;
             this.to = to;
             this.priority = priority;
-            this.timetable = timetable;
+            this.interval = interval;
         }
     }
 
     @ApiOperation("Get navigation information, need :from and :to as query parameters.")
     @GetMapping("")
-    public List<Navi> navigate(@RequestParam("from") String from, @RequestParam("to") String to) {
-        Building fromBuilding = buildingMapper.findByName(from);
-        Building toBuilding = buildingMapper.findByName(to);
+    public List<Navi> navigate(@RequestParam("from") int fromId, @RequestParam("to") int toId) {
+        List<StopInNavigation> fromStops = buildingMapper.findNearStop(fromId);
+        List<StopInNavigation> toStops = buildingMapper.findNearStop(toId);
 
-        List<Stop> fromStops = buildingMapper.findNearStop(fromBuilding);
-        List<Stop> toStops = buildingMapper.findNearStop(toBuilding);
-
-        List<Navi> avilable_navis = new ArrayList<>();
+        List<Navi> available_navi = new ArrayList<>();
 
         HashMap<Bus, List<Stop>> bus2routeCache = new HashMap<>();
-        HashMap<Bus, List<LocalDateTime>> bus2timetableCache = new HashMap<>();
+        HashMap<Bus, Integer> bus2interval = new HashMap<>();
 
-        for (Stop fromStop : fromStops) {
+        for (StopInNavigation fromStop : fromStops) {
             List<Bus> fromStopBuses = stopMapper.findRunningThroughBus(fromStop);
             for (Bus bus : fromStopBuses) {
 
                 if (!bus2routeCache.containsKey(bus)) {
                     bus2routeCache.put(bus, busMapper.findRouteByBus(bus));
-                    bus2timetableCache.put(bus, busMapper.findTimetableByBus(bus));
+                    bus2interval.put(bus, busMapper.findTimeIntervalByBus(bus));
                 }
                 List<Stop> route = bus2routeCache.get(bus);
-                List<LocalDateTime> timetable = bus2timetableCache.get(bus);
-                for (Stop toStop: toStops) {
+                Integer interval = bus2interval.get(bus);
+                for (StopInNavigation toStop: toStops) {
                     if (canReachFromTo(route, fromStop, toStop)) {
                         int priority = fromStop.getPriority() + toStop.getPriority();
-                        avilable_navis.add(new Navi(fromStop, toStop, priority, timetable));
+                        available_navi.add(new Navi(fromStop, toStop, priority, interval));
                     }
                 }
             }
         }
 
-        return avilable_navis;
+        return available_navi;
     }
 
     private Boolean canReachFromTo(List<Stop> route, Stop fromStop, Stop toStop) {

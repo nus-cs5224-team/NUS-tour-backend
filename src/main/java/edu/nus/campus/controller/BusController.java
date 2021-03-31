@@ -1,6 +1,6 @@
 package edu.nus.campus.controller;
 
-import edu.nus.campus.mappers.BusMapper;
+import edu.nus.campus.mappers.bus.BusMapper;
 import edu.nus.campus.model.Bus;
 import edu.nus.campus.model.Stop;
 import io.swagger.annotations.Api;
@@ -8,8 +8,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -31,6 +29,12 @@ public class BusController {
         return busMapper.findByName(busName);
     }
 
+    @ApiOperation("Get all buses")
+    @GetMapping("/")
+    public List<Bus> getAllBus() {
+        return busMapper.findAllBus();
+    }
+
     @ApiOperation("Get a bus's route by bus name")
     @GetMapping("/{busName}/route")
     public List<Stop> getRoute(@PathVariable("busName") String busName) {
@@ -40,12 +44,12 @@ public class BusController {
         return busMapper.findRouteByBus(bus);
     }
 
-    @ApiOperation("Get a bus's timetable by bus name")
-    @GetMapping("/{busName}/timetable")
-    public List<LocalDateTime> getTimetable(@PathVariable("busName") String busName) {
+    @ApiOperation("Get time interval between 2 buses by bus name")
+    @GetMapping("/{busName}/interval")
+    public Integer getTimeInterval(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
         if (busName == null) return null;
         Bus bus = busMapper.findByName(busName);
-        return busMapper.findTimetableByBus(bus);
+        return busMapper.findTimeIntervalByBus(bus);
     }
 }

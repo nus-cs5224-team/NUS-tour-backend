@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="edu.nus.campus.mappers.BusMapper">
+<mapper namespace="edu.nus.campus.mappers.bus.BusMapper">
     <select id="findById" resultType="edu.nus.campus.model.Bus">
         SELECT * FROM `bus`
         WHERE `id`=#{id};
@@ -11,6 +11,10 @@
     <select id="findByName" resultType="edu.nus.campus.model.Bus">
         SELECT * FROM `bus`
         WHERE `name`=#{name};
+    </select>
+
+    <select id="findAllBus" resultType="edu.nus.campus.model.Bus">
+        SELECT * FROM `bus`;
     </select>
 
     <select id="findRouteByBus" parameterType="edu.nus.campus.model.Bus" resultType="edu.nus.campus.model.Stop">
@@ -22,9 +26,8 @@
         ORDER BY `index` ASC;
     </select>
 
-    <select id="findTimetableByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.time.LocalDateTime">
-        SELECT `starttime` FROM `bus_timetable`
-        WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus_id`=#{id}
-        ORDER BY `starttime` ASC;
+    <select id="findTimeIntervalByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.lang.Integer">
+        SELECT `interval` FROM `bus_timetable`
+        WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus_id`=#{id} AND `starttime` &lt;= TIME(NOW()) AND `endtime` > TIME(NOW());
     </select>
 </mapper>
