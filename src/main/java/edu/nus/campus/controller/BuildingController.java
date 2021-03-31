@@ -19,7 +19,7 @@ public class BuildingController {
     private BuildingMapper buildingMapper;
 
     @ApiOperation("Get all buildings")
-    @GetMapping("/")
+    @GetMapping("")
     public List<Building> getAllBuildings(@RequestParam(value = "name", required = false) String name) {
         if (name == null) {
             return buildingMapper.findAllBuildings();

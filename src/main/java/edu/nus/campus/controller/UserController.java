@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @ApiOperation("Update user information")
-    @PutMapping("/")
+    @PutMapping("")
     public Boolean update(@RequestBody User user) {
         try {
             userMapper.update(user);

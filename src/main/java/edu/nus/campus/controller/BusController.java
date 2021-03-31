@@ -30,7 +30,7 @@ public class BusController {
     }
 
     @ApiOperation("Get all buses")
-    @GetMapping("/")
+    @GetMapping("")
     public List<Bus> getAllBus() {
         return busMapper.findAllBus();
     }

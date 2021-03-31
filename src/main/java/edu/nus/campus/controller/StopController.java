@@ -19,7 +19,7 @@ public class StopController {
     private StopMapper stopMapper;
 
     @ApiOperation("Get all stops")
-    @GetMapping("/")
+    @GetMapping("")
     public List<Stop> getAllStop(@RequestParam(value = "name", required = false) String name) {
         if (name == null) {
             return stopMapper.findAll();
