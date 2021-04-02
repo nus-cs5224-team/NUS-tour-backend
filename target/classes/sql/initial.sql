@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `bus_timetable` (
     `weekday`     INT             NOT NULL,
     `starttime`   TIME            NOT NULL,
     `endtime`     TIME            NOT NULL,
-    `interval`    INT             NOT NULL
+    `interval`    INT             NOT NULL,
 
     FOREIGN KEY (`bus_id`) REFERENCES bus(`id`),
     CONSTRAINT unique_index UNIQUE (`bus_id`, `weekday`, `starttime`)

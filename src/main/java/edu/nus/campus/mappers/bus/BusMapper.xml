@@ -26,8 +26,29 @@
         ORDER BY `index` ASC;
     </select>
 
-    <select id="findTimeIntervalByBus" parameterType="edu.nus.campus.model.Bus" resultType="java.lang.Integer">
-        SELECT `interval` FROM `bus_timetable`
-        WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus_id`=#{id} AND `starttime` &lt;= TIME(NOW()) AND `endtime` > TIME(NOW());
+    <select id="findTimeIntervalByBusName" resultType="java.lang.Integer">
+        SELECT `interval` FROM `bus_timetable` INNER JOIN `bus`
+        ON `bus_timetable`.`bus_id`=`bus`.`id`
+        WHERE `weekday`=WEEKDAY(CURDATE()) AND `bus`.`name`=#{busName} AND `starttime` &lt;= TIME(NOW()) AND `endtime` > TIME(NOW());
+    </select>
+
+    <!-- Find Bus with (from stop to to stop) with input (from building id and to building id) -->
+    <select id="navigateS" resultType="edu.nus.campus.mappers.bus.NaviS">
+        select distinct `b`.`name` as `busName`, `f`.`fbname` as `fromStopName`, `f`.`tbname` as `toStopName`, `f`.`priority` as `priority` from
+        (select distinct `t1`.`bus_id` as `bus`, `t1`.`bname` as `fbname`, `t1`.`index` as `findex`, `t2`.`bname` as `tbname`, `t2`.`index` as `tindex`, `t1`.`priority`+`t2`.`priority` as `priority` from
+        (select `s1`.`name` as `bname`, `index`, `bus_id`, `priority` from
+        ((select `stop_id` as `from_stop_id`, `priority` from `near_bus_stop` where `building_id`=#{fromBuildingId}) `fs`
+        inner join `running_through` `r1` on `r1`.`stop_id`=`fs`.`from_stop_id`)
+        inner join `stop` `s1` on `s1`.`id`=`fs`.`from_stop_id`) `t1`
+        inner join
+        (select  `s2`.`name` as `bname`, `index`, `bus_id`, `priority` from
+        ((select `stop_id` as `to_stop_id`, `priority` from `near_bus_stop` where `building_id`=#{toBuildingId}) `ts`
+        inner join `running_through` `r2` on `r2`.`stop_id`=`ts`.`to_stop_id`)
+        inner join `stop` `s2` on `s2`.`id`=`ts`.`to_stop_id`) `t2`
+        on `t1`.`bus_id`=`t2`.`bus_id`
+        ) as f
+        inner join `bus` `b`
+        on `b`.`id`=`f`.`bus`
+        where `f`.`findex` &lt; `f`.`tindex`;
     </select>
 </mapper>

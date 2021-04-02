@@ -48,8 +48,6 @@ public class BusController {
     @GetMapping("/{busName}/interval")
     public Integer getTimeInterval(@PathVariable("busName") String busName) {
         // CRUD from db, get the bus
-        if (busName == null) return null;
-        Bus bus = busMapper.findByName(busName);
-        return busMapper.findTimeIntervalByBus(bus);
+        return busMapper.findTimeIntervalByBusName(busName);
     }
 }
