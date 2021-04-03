@@ -30,6 +30,12 @@ public class PromotionController {
         return promotionMapper.findById(id);
     }
 
+    @ApiOperation("Get a promotion by ID")
+    @GetMapping("")
+    public List<Promotion> getAllPromotion() {
+        return promotionMapper.findAll();
+    }
+
     @ApiOperation("Get the promotions by building_id")
     @GetMapping("/building/{building_id}")
     public List<Promotion> getPromotionByBuilding(@PathVariable("building_id") int building_id,

@@ -10,5 +10,6 @@ import java.util.List;
 @Mapper
 public interface PromotionMapper {
     Promotion findById(int id);
+    List<Promotion> findAll();
     List<Promotion> findPromotionByBuilding(Building building, LocalDateTime starttime, LocalDateTime endtime);
 }

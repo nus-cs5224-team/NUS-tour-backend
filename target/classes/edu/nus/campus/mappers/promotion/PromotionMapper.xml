@@ -8,6 +8,10 @@
         WHERE `id`=#{id};
     </select>
 
+    <select id="findAll" resultType="edu.nus.campus.model.Promotion">
+        SELECT * FROM `promotion`;
+    </select>
+
     <select id="findPromotionByBuilding" parameterType="edu.nus.campus.model.Building" resultType="edu.nus.campus.model.Promotion">
         SELECT `promotion`.* FROM `promotion`
         WHERE `building_id`=#{building.id}

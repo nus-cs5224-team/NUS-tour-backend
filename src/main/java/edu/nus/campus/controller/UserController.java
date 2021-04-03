@@ -24,9 +24,14 @@ public class UserController {
     private UserMapper userMapper;
 
     @ApiOperation("Add a user")
-    @PostMapping("/")
-    public User addUser(@RequestBody User user) {
-        return new User();
+    @PostMapping("")
+    public Boolean addUser(@RequestBody User user) {
+        try {
+            userMapper.insert(user);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
     }
 
     @ApiOperation("Find user by id")
@@ -60,12 +65,11 @@ public class UserController {
     }
 
     @ApiOperation("Search User's events, need be restricted by :starttime and :endtime")
-    @GetMapping("/{id}/events")
-    public List<Event> getUserEvents(@PathVariable("id") int id,
+    @GetMapping("/{user_id}/events")
+    public List<Event> getUserEvents(@PathVariable("user_id") int userId,
                                      @RequestParam(value = "starttime", required = false) LocalDateTime starttime,
                                      @RequestParam(value = "endtime", required = false) LocalDateTime endtime) {
-        User user = userMapper.findById(id);
-        return userMapper.findEventsByUser(user, starttime, endtime);
+        return userMapper.findEventsByUser(userId, starttime, endtime);
     }
 
     @ApiOperation("Add a event to a user")
