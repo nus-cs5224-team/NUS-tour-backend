@@ -10,7 +10,6 @@ INSERT INTO `user` (username, email) VALUES('John_nus', 'john.n@e.nus.edu');
 INSERT INTO `user` (username, email) VALUES('Mark_nus',	'mark.n@e.nus.edu');
 INSERT INTO `user` (username, email) VALUES('Sakishi_nus',	'Sakishi.n@e.nus.edu');
 
-
 INSERT INTO `event` (abstracts, details, user_id) VALUES('Sleep', 'Sleep well', 1);
 
 INSERT INTO `promotion` (abstracts, details, building_id, starttime, endtime)

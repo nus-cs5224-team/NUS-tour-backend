@@ -3,12 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.nus.campus.mappers.promotion.PromotionMapper">
-    <select id="findById" resultType="edu.nus.campus.model.Promotion">
-        SELECT * FROM `promotion`
-        WHERE `id`=#{id};
+    <resultMap id="promotionMapWithBuilding" type="edu.nus.campus.model.Promotion">
+        <id column="id" property="id"/>
+        <result column="building_id" property="buildingId" />
+        <association property="building" column="building_id" javaType="edu.nus.campus.model.Building" select="edu.nus.campus.mappers.building.BuildingMapper.findById"/>
+    </resultMap>
+
+    <select id="findById" resultMap="promotionMapWithBuilding">
+        SELECT * FROM `promotion` WHERE `id`=#{id};
     </select>
 
-    <select id="findAll" resultType="edu.nus.campus.model.Promotion">
+    <select id="findAll" resultMap="promotionMapWithBuilding">
         SELECT * FROM `promotion`;
     </select>
 

@@ -8,6 +8,24 @@ public class Promotion {
     private String details;
     private LocalDateTime starttime;
     private LocalDateTime endtime;
+    private Integer buildingId;
+    private Building building;
+
+    public Integer getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(Integer buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
 
     public int getId() {
         return id;
