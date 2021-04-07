@@ -15,4 +15,7 @@ public interface UserMapper {
     void delete(User user);
     void insertEvent(Event event);
     List<Event> findEventsByUser(int userId, LocalDateTime starttime, LocalDateTime endtime);
+
+    void updateEvent(Event event);
+    void deleteEventById(int id);
 }

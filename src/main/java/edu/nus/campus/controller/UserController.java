@@ -82,4 +82,26 @@ public class UserController {
         }
         return Boolean.TRUE;
     }
+
+    @ApiOperation("Delete a event from a user with its id")
+    @DeleteMapping("/{user_id}/event/{event_id}")
+    public Boolean addEvent(@PathVariable("user_id") int userId, @PathVariable("event_id") int eventId) {
+        try {
+            userMapper.deleteEventById(eventId);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+
+    @ApiOperation("Update an event from a user with its id")
+    @PutMapping("/{user_id}/event/{event_id}")
+    public Boolean updateEvent(@RequestBody Event event) {
+        try {
+            userMapper.updateEvent(event);
+        } catch (Exception e) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
 }

@@ -39,4 +39,14 @@
         </if>
         ;
     </select>
+
+    <delete id="deleteEventById">
+        DELETE FROM `event` WHERE `id`=#{id};
+    </delete>
+
+    <update id="updateEvent" parameterType="edu.nus.campus.model.Event">
+        UPDATE `event`
+        SET `abstracts`=#{abstracts}, `details`=#{details}, `time`=#{time}
+        WHERE `id`=#{id};
+    </update>
 </mapper>
